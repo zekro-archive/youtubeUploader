@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.google.api.services.samples.youtube.cmdline.youtube_cm
+ dline_uploadvideo_sample.UploadVideo
+

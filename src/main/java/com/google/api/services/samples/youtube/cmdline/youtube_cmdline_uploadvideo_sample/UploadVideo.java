@@ -27,6 +27,7 @@ import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
 
+import com.sun.glass.ui.SystemClipboard;
 import com.sun.imageio.plugins.common.InputStreamAdapter;
 import org.xml.sax.SAXException;
 
@@ -43,8 +44,9 @@ public class UploadVideo {
   private static String VIDEO_FILE_FORMAT = "video/*";
 
 
-  private static String videoTitle= "Video Upload";
+  private static String videoTitle= "Video Upload"; //DEFAULT VIDEO TITLE
   private static String videoPrivacy= "private";
+  private static String _videoTitle = "";
 
   private static void getArguments(String[] args) {
 
@@ -134,7 +136,7 @@ public class UploadVideo {
 
     System.out.print(
             "#-----------------------------------# \n" +
-            "| SIMPLE YOUTUBE UPLOADER V1.0      | \n" +
+            "| SIMPLE YOUTUBE UPLOADER V1.1      | \n" +
             "| (c)2017 by zekro                  | \n" +
             "| http://zekro.jimdo.com            | \n" +
             "#-----------------------------------# \n" +
@@ -142,9 +144,66 @@ public class UploadVideo {
             "| YouTube API (c) by Google.        | \n" +
             "#-----------------------------------# \n\n");
 
-    checkInputs();
 
+    try {
+      if (getLocalVideoFiles().length > 1) {
+
+        long videoSize = 0;
+        for (int i = 0; i <= getLocalVideoFiles().length -1; i++) {
+          videoSize = videoSize + getLocalVideoFiles()[i].length();
+        }
+        float videoSizeMB = (videoSize/1048576);
+
+        System.out.print("There are " + getLocalVideoFiles().length + " video files detected with the size of " + videoSizeMB + " MB to upload.\n\n" +
+                "Do you want to uplaod these files? [Y/N]: ");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String userChoise = br.readLine();
+
+        System.out.println(userChoise);
+
+        if (userChoise == "n") {
+          System.out.println("Programm will exit now...");
+          System.exit(1);
+        }
+
+        for (int i = 0; i <= getLocalVideoFiles().length -1; i++) {
+
+          checkInputs();
+          getArguments(args);
+          _videoTitle = videoTitle + " - BulkNbr " + i+1;
+
+          try {
+            uploadVideo(getLocalVideoFiles()[i]);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+
+          System.out.println("Video " + i+1 + " uplaoded successfully!\n\n");
+
+        }
+
+        System.out.println("All files are uplaoded!");
+        System.exit(1);
+      }
+    } catch(IOException e) {
+      System.out.println("There are no video files in the location '" + getSettings().get(0) + "'!");
+      System.exit(1);
+    }
+
+    checkInputs();
     getArguments(args);
+
+    _videoTitle = videoTitle;
+    try {
+      uploadVideo(getLocalVideoFiles()[0]);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  private static void uploadVideo(File _videoFile) {
 
     List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
 
@@ -154,11 +213,14 @@ public class UploadVideo {
 
       // YouTube object used to make all API requests.
       youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(
-          "youtube-cmdline-uploadvideo-sample").build();
+              "youtube-cmdline-uploadvideo-sample").build();
 
       // We get the user selected local video file to upload.
-      File videoFile = getVideoFromUser();
-      System.out.println("You chose " + videoFile + " to upload.");
+
+      File videoFile = _videoFile; //JUMP SECTION TO SELECT VIDEO FOR BULK VIDEO UPLAOD
+
+      //File videoFile = getVideoFromUser();
+      System.out.println("'" + videoFile + "' will upload now.");
 
       // Add extra information to the video before uploading.
       Video videoObjectDefiningMetadata = new Video();
@@ -181,9 +243,9 @@ public class UploadVideo {
        * and use your own standard names.
        */
       Calendar cal = Calendar.getInstance();
-      snippet.setTitle(videoTitle);
+      snippet.setTitle(_videoTitle);
       snippet.setDescription(
-          "Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
+              "Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
 
       // Set your keywords.
       List<String> tags = new ArrayList<String>();
@@ -194,7 +256,7 @@ public class UploadVideo {
       videoObjectDefiningMetadata.setSnippet(snippet);
 
       InputStreamContent mediaContent = new InputStreamContent(
-          VIDEO_FILE_FORMAT, new BufferedInputStream(new FileInputStream(videoFile)));
+              VIDEO_FILE_FORMAT, new BufferedInputStream(new FileInputStream(videoFile)));
       mediaContent.setLength(videoFile.length());
 
       /*
@@ -202,7 +264,7 @@ public class UploadVideo {
        * uploaded. 2. Metadata we want associated with the uploaded video. 3. Video file itself.
        */
       YouTube.Videos.Insert videoInsert = youtube.videos()
-          .insert("snippet,statistics,status", videoObjectDefiningMetadata, mediaContent);
+              .insert("snippet,statistics,status", videoObjectDefiningMetadata, mediaContent);
 
       // Set the upload type and add event listener.
       MediaHttpUploader uploader = videoInsert.getMediaHttpUploader();
@@ -251,7 +313,7 @@ public class UploadVideo {
 
     } catch (GoogleJsonResponseException e) {
       System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-          + e.getDetails().getMessage());
+              + e.getDetails().getMessage());
       e.printStackTrace();
     } catch (IOException e) {
       System.err.println("IOException: " + e.getMessage());
@@ -278,7 +340,7 @@ public class UploadVideo {
     String location = getSettings().get(0);
 
     File currentDirectory = new File(location + ".");
-    System.out.println("Video files from " + currentDirectory.getAbsolutePath() + ":");
+    //System.out.println("Video files from " + currentDirectory.getAbsolutePath() + ":");
 
     // Filters out video files. This list of video extensions is not comprehensive.
     FilenameFilter videoFilter = new FilenameFilter() {

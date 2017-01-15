@@ -1,0 +1,14 @@
+[ 15.53.2017 17:53:58 ] STARTED SESSION
+
+#-----------------------------------# 
+| SIMPLE YOUTUBE UPLOADER V1.2      | 
+| (c)2017 by zekro                  | 
+| http://zekro.jimdo.com            | 
+#-----------------------------------# 
+| This tool is unsing the official  | 
+| YouTube API (c) by Google.        | 
+#-----------------------------------# 
+
+There are 4 video files detected with the size of 10187.0 MB to upload.
+
+Do you want to uplaod these files? [Y/N]: 

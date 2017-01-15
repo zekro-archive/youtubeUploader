@@ -2,5 +2,6 @@
 
 <settings>
 	<!-- PLEASE CAHNGE "\" IN THE PATH TO "/"! -->
-	<location>E:/NOCH HOCHZULADEN/tl</location>
+	<location>E:/NOCH HOCHZULADEN/</location>
+	<log>true</log>
 </settings>

@@ -1,9 +1,14 @@
 package com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,11 +30,14 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 
-import com.sun.glass.ui.SystemClipboard;
-import com.sun.imageio.plugins.common.InputStreamAdapter;
+import java.util.logging.*;
+
+import org.apache.commons.io.output.TeeOutputStream;
 import org.xml.sax.SAXException;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -89,6 +97,8 @@ public class UploadVideo {
       doc.getDocumentElement().normalize();
 
       results.add(0, doc.getElementsByTagName("location").item(0).getTextContent());
+      results.add(1, doc.getElementsByTagName("log").item(0).getTextContent());
+
 
     } catch (ParserConfigurationException e) {
       e.printStackTrace();
@@ -102,6 +112,11 @@ public class UploadVideo {
     return results;
   }
 
+  private static String getTime() {
+    Calendar cal = Calendar.getInstance();
+    String timeDate = new SimpleDateFormat("dd.mm.yyyy HH:mm:ss").format(cal.getTime());
+    return timeDate;
+  }
 
   private static Credential authorize(List<String> scopes) throws Exception {
 
@@ -134,9 +149,25 @@ public class UploadVideo {
 
   public static void main(String[] args) {
 
+    if (getSettings().get(1).equals("true")) {
+      try {
+        FileOutputStream stream = new FileOutputStream("log.txt");
+        TeeOutputStream output = new TeeOutputStream(System.out, stream);
+        PrintStream ps = new PrintStream(output);
+        System.setOut(ps);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+    }
+
+
+    System.out.println("[ " + getTime() + " ] STARTED SESSION\n");
+
+
     System.out.print(
             "#-----------------------------------# \n" +
-            "| SIMPLE YOUTUBE UPLOADER V1.1      | \n" +
+            "| SIMPLE YOUTUBE UPLOADER V1.2      | \n" +
             "| (c)2017 by zekro                  | \n" +
             "| http://zekro.jimdo.com            | \n" +
             "#-----------------------------------# \n" +
@@ -179,11 +210,11 @@ public class UploadVideo {
             e.printStackTrace();
           }
 
-          System.out.println("Video " + i+1 + " uplaoded successfully!\n\n");
+          System.out.println("[ " + getTime() + " ] Video " + i+1 + " uplaoded successfully!\n\n");
 
         }
 
-        System.out.println("All files are uplaoded!");
+        System.out.println("[ " + getTime() + "] All files are uplaoded!");
         System.exit(1);
       }
     } catch(IOException e) {

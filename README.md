@@ -28,7 +28,7 @@ Then download the package of the latest version (change version number to latest
 $ wget "https://github.com/zekroTJA/youtubeUploader/releases/download/1.2.1/javayoutubeuploader_v1.2.1.zip"
 ```
 Then create a folder where you want to install and unzip the package:
-```bash
+```shell
 $ mkdir ytu/
 $ cd ytu/
 $ unzip javayoutubeuploader_v1.2.1.zip

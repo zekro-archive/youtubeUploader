@@ -50,7 +50,7 @@ After that, put the video files in the installed folder and start the tool in th
 ```bash
 $ screen java -jar ytUp.jar <video Title> <Privacy (private | public | unlisted)> 
 ```
->Default arguments if you dont enter them: title: "youtubeUpload" ; privacy: "private"
+>The two arguments are not required and will defaultly set to Title "Youtube Uplaod" and Privacy "private".
 
 ---
 

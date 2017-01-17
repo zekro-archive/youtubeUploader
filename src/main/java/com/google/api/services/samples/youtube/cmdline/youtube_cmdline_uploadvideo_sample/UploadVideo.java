@@ -167,7 +167,7 @@ public class UploadVideo {
 
     System.out.print(
             "#-----------------------------------# \n" +
-            "| SIMPLE YOUTUBE UPLOADER V1.2      | \n" +
+            "| SIMPLE YOUTUBE UPLOADER V1.2.1    | \n" +
             "| (c)2017 by zekro                  | \n" +
             "| http://zekro.jimdo.com            | \n" +
             "#-----------------------------------# \n" +
@@ -190,8 +190,6 @@ public class UploadVideo {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String userChoise = br.readLine();
-
-        System.out.println(userChoise);
 
         if (userChoise == "n") {
           System.out.println("Programm will exit now...");
@@ -227,6 +225,8 @@ public class UploadVideo {
 
     _videoTitle = videoTitle;
     try {
+      float videoSizeMB = getLocalVideoFiles()[0].length() / 1048576;
+      System.out.print("Video file with the size of " + videoSizeMB + " MB detected to upload...\n\n");
       uploadVideo(getLocalVideoFiles()[0]);
     } catch (IOException e) {
       e.printStackTrace();
@@ -311,20 +311,19 @@ public class UploadVideo {
         public void progressChanged(MediaHttpUploader uploader) throws IOException {
           switch (uploader.getUploadState()) {
             case INITIATION_STARTED:
-              System.out.println("Initiation Started");
+              System.out.println("[ " + getTime() + " ] Initiation Started");
               break;
             case INITIATION_COMPLETE:
-              System.out.println("Initiation Completed");
+              System.out.println("[ " + getTime() + " ] Initiation Completed");
               break;
             case MEDIA_IN_PROGRESS:
-              System.out.println("Upload in progress");
-              System.out.println("Upload percentage: " + uploader.getProgress());
+              System.out.println("[ " + getTime() + " ] Upload percentage: " + uploader.getProgress());
               break;
             case MEDIA_COMPLETE:
-              System.out.println("Upload Completed!");
+              System.out.println("[ " + getTime() + " ] Upload Completed!");
               break;
             case NOT_STARTED:
-              System.out.println("Upload Not Started!");
+              System.out.println("[ " + getTime() + " ] Upload Not Started!");
               break;
           }
         }

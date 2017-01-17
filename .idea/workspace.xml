@@ -6,7 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java" line="360" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java" line="359" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e68a24ef-60c2-4bfa-bd8d-a06f25cc3b3c" name="Default" comment="" />
@@ -33,8 +33,8 @@
       <file leaf-file-name="UploadVideo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="174" column="42" selection-start-line="174" selection-start-column="42" selection-end-line="174" selection-end-column="42" />
+            <state relative-caret-position="221">
+              <caret line="228" column="52" selection-start-line="228" selection-start-column="52" selection-end-line="228" selection-end-column="52" />
               <folding>
                 <element signature="method#getArguments#0;class#UploadVideo#0" expanded="false" />
                 <element signature="method#checkInputs#0;class#UploadVideo#0" expanded="false" />
@@ -77,8 +77,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="22" />
+    <option name="x" value="-1285" />
+    <option name="y" value="435" />
     <option name="width" value="1456" />
     <option name="height" value="886" />
   </component>
@@ -107,6 +107,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -144,6 +145,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="META-INF" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -220,7 +225,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -228,7 +232,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../commons-io-2.5-javadoc.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
@@ -522,7 +526,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1456" height="886" extended-state="6" />
+    <frame x="-1285" y="435" width="1456" height="886" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -573,6 +577,38 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#getArguments#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#checkInputs#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#getSettings#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#authorize#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#getVideoFromUser#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#getUserChoice#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#isValidIntegerSelection#0;class#UploadVideo#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#getArguments#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#checkInputs#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#getSettings#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#authorize#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#getVideoFromUser#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#getUserChoice#0;class#UploadVideo#0" expanded="false" />
+            <element signature="method#isValidIntegerSelection#0;class#UploadVideo#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -789,14 +825,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/google/api/services/samples/youtube/cmdline/youtube_cmdline_uploadvideo_sample/UploadVideo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="174" column="42" selection-start-line="174" selection-start-column="42" selection-end-line="174" selection-end-column="42" />
+        <state relative-caret-position="221">
+          <caret line="228" column="52" selection-start-line="228" selection-start-column="52" selection-end-line="228" selection-end-column="52" />
           <folding>
             <element signature="method#getArguments#0;class#UploadVideo#0" expanded="false" />
             <element signature="method#checkInputs#0;class#UploadVideo#0" expanded="false" />

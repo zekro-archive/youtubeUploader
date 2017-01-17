@@ -9,7 +9,7 @@ First of all you need to enter your youtube API-ID and -Secrets in the **"client
 
 You can now start the tool in the console with 
 ```bash
-$ java -jar ytUp.jar <video Title> <Privacy (private | public | unlisted)>
+<p>$</p> java -jar ytUp.jar <video Title> <Privacy (private | public | unlisted)>
 ```
 >*The two arguments are not required and will defaultly set to Title "Youtube Uplaod" and Privacy "private".*
 

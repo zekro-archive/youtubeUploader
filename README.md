@@ -13,7 +13,34 @@ $ java -jar ytUp.jar <video Title> <Privacy (private | public | unlisted)>
 ```
 >*The two arguments are not required and will defaultly set to Title "Youtube Uplaod" and Privacy "private".*
 
-####IF YOU WANT TO RUN IT ON RASPBERRY PI
+---
+
+###RUNNING ON RASPBERRY PI
+
+####INSTALLATION
+
+First you need to install unzip to unzip downloaded package:
+```bash
+$ sudo apt-get install unzip
+```
+Then download the package of the latest version (change version number to latest version):
+```bash
+$ wget "https://github.com/zekroTJA/youtubeUploader/releases/download/1.2.1/javayoutubeuploader_v1.2.1.zip"
+```
+Then create a folder where you want to install and unzip the package:
+```shell
+$ mkdir ytu/
+$ cd ytu/
+$ unzip javayoutubeuploader_v1.2.1.zip
+$ rem javayoutubeuploader_v1.2.1.zip
+```
+Now enter your API-Key into the the *client_secrets.json* and insert the video location folder in the *stat_settings.xml*:
+```bash
+$ nano client_secrets.json
+$ nano stat_settings.xml
+```
+
+####RUNNING THE TOOL
 
 If you want to control the tool via SSH, I recommend to install the screen package:
 ```bash
@@ -23,6 +50,7 @@ After that, put the video files in the installed folder and start the tool in th
 ```bash
 $ screen java -jar ytUp.jar <video Title> <Privacy (private | public | unlisted)> 
 ```
+>The two arguments are not required and will defaultly set to Title "Youtube Uplaod" and Privacy "private".
 
 ---
 

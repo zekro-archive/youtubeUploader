@@ -1,14 +1,21 @@
-[ 15.53.2017 17:53:58 ] STARTED SESSION
+[ 20.01.2017 00:07:49 ] STARTED SESSION
 
-#-----------------------------------# 
-| SIMPLE YOUTUBE UPLOADER V1.2      | 
-| (c)2017 by zekro                  | 
-| http://zekro.jimdo.com            | 
-#-----------------------------------# 
-| This tool is unsing the official  | 
-| YouTube API (c) by Google.        | 
-#-----------------------------------# 
+   #-----------------------------------# 
+   | SIMPLE YOUTUBE UPLOADER V1.3.00   | 
+   | (c)2017 by zekro                  | 
+   | http://zekro.jimdo.com            | 
+   #-----------------------------------# 
+   | This tool is unsing the official  | 
+   | YouTube API (c) by Google.        | 
+   #-----------------------------------# 
 
-There are 4 video files detected with the size of 10187.0 MB to upload.
+SETTINGS:
+ ~ Video Title:        Video Upload
+ ~ Video Privacy:      private
+ ~ Video Path:         E:/NOCH HOCHZULADEN/tl
+ ~ Write Logfile:      true
+ ~ Resumable Upload:   true
+
+There are 2 video files detected with the size of 38.0 MB to upload.
 
 Do you want to uplaod these files? [Y/N]: 

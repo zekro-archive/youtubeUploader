@@ -1,6 +1,8 @@
 package com.google.api.services.samples.youtube.cmdline.youtube_cmdline_uploadvideo_sample;
 
+import java.awt.*;
 import java.io.*;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +40,7 @@ import java.util.logging.*;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.xml.sax.SAXException;
 import sun.java2d.pipe.SpanShapeRenderer;
+import sun.rmi.server.Activation$ActivationSystemImpl_Stub;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -50,104 +53,26 @@ public class UploadVideo {
   private static final JsonFactory JSON_FACTORY = new JacksonFactory();
   private static YouTube youtube;
   private static String VIDEO_FILE_FORMAT = "video/*";
+  private static String VERSION = "1.3.1";
 
 
   private static String videoTitle= "Video Upload"; //DEFAULT VIDEO TITLE
   private static String videoPrivacy= "private";
   private static String _videoTitle = "";
 
-  private static void getArguments(String[] args) {
-
-    try {
-
-      videoTitle = args[0];
-      videoPrivacy = args[1];
-
-    } catch(Exception e) {
-    }
-  }
-
-  private static void checkInputs() {
-    File fSecrets = new File(System.getProperty("user.dir") + "/client_secrets.json");
-    File fSettings = new File(System.getProperty("user.dir") + "/stat_settings.xml");
-
-    if (!fSecrets.exists() || fSecrets.isDirectory()) {
-      System.out.print("[ERROR] File 'client_secrets.json' does not exist in the program directory! Please download  the preset-file from the main GitHub-Page of this tool and enter your client secrets!");
-      System.exit(1);
-    }
-
-    if (!fSettings.exists() || fSecrets.isDirectory()) {
-      System.out.print("[ERROR] File 'stat_settings.xml' does not exist in the program directory! Please download  the preset-file from the main GitHub-Page of this tool and enter your settings!");
-      System.exit(1);
-    }
-  }
-
-  private static List<String> getSettings() {
-
-    List<String> results = new ArrayList<String>();
-
-    File xmlFile = new File(System.getProperty("user.dir") + "/stat_settings.xml");
-    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-
-
-    try {
-
-      DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-      org.w3c.dom.Document doc = documentBuilder.parse(xmlFile);
-      doc.getDocumentElement().normalize();
-
-      results.add(0, doc.getElementsByTagName("location").item(0).getTextContent());
-      results.add(1, doc.getElementsByTagName("log").item(0).getTextContent());
-
-
-    } catch (ParserConfigurationException e) {
-      e.printStackTrace();
-    } catch (SAXException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-
-    return results;
-  }
-
-  private static String getTime() {
-    Calendar cal = Calendar.getInstance();
-    String timeDate = new SimpleDateFormat("dd.mm.yyyy HH:mm:ss").format(cal.getTime());
-    return timeDate;
-  }
-
-  private static Credential authorize(List<String> scopes) throws Exception {
-
-    /*GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-        JSON_FACTORY, UploadVideo.class.getResourceAsStream("/client_secrets.json"));*/
-
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-        JSON_FACTORY, new FileInputStream(System.getProperty("user.dir") + "/client_secrets.json"));
-
-    if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-        || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-      System.out.println(
-          "Enter Client ID and Secret from https://code.google.com/apis/console/?api=youtube"
-          + "into youtube-cmdline-uploadvideo-sample/src/main/resources/client_secrets.json");
-      System.exit(1);
-    }
-
-    FileCredentialStore credentialStore = new FileCredentialStore(
-        new File(System.getProperty("user.home"), ".credentials/youtube-api-uploadvideo.json"),
-        JSON_FACTORY);
-
-    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialStore(credentialStore)
-        .build();
-
-    LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
-
-    return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
-  }
-
+  /**
+   * MAIN METHOD.
+   * @param args
+     */
   public static void main(String[] args) {
+
+    try {
+      if (args[0].contains("help")) {
+        System.out.println("If you need help, please navigate to following page: \n" +
+                "https://github.com/zekroTJA/youtubeUploader/blob/master/README.md");
+        System.exit(1);
+      }
+    } catch (Exception e) {}
 
     if (getSettings().get(1).equals("true")) {
       try {
@@ -161,20 +86,28 @@ public class UploadVideo {
 
     }
 
-
     System.out.println("[ " + getTime() + " ] STARTED SESSION\n");
 
 
     System.out.print(
-            "#-----------------------------------# \n" +
-            "| SIMPLE YOUTUBE UPLOADER V1.2.1    | \n" +
-            "| (c)2017 by zekro                  | \n" +
-            "| http://zekro.jimdo.com            | \n" +
-            "#-----------------------------------# \n" +
-            "| This tool is unsing the official  | \n" +
-            "| YouTube API (c) by Google.        | \n" +
-            "#-----------------------------------# \n\n");
+                    "   #-----------------------------------# \n" +
+                    "   | SIMPLE YOUTUBE UPLOADER V" + VERSION + "  | \n" +
+                    "   | (c)2017 by zekro                  | \n" +
+                    "   | http://zekro.jimdo.com            | \n" +
+                    "   #-----------------------------------# \n" +
+                    "   | This tool is unsing the official  | \n" +
+                    "   | YouTube API (c) by Google.        | \n" +
+                    "   #-----------------------------------# \n\n"
+    );
 
+    System.out.println(
+                    "SETTINGS:\n" +
+                    " ~ Video Title:        " + videoTitle + "\n" +
+                    " ~ Video Privacy:      " + videoPrivacy + "\n" +
+                    " ~ Video Path:         " + getSettings().get(0) + "\n" +
+                    " ~ Write Logfile:      " + getSettings().get(1) + "\n" +
+                    " ~ Resumable Upload:   " + getSettings().get(2) + "\n"
+    );
 
     try {
       if (getLocalVideoFiles().length > 1) {
@@ -234,6 +167,135 @@ public class UploadVideo {
 
   }
 
+  /**
+   * Gets the arguments of command line and defines as static variables to use in further methods.
+   * @param args
+   */
+  private static void getArguments(String[] args) {
+
+    try {
+
+      videoTitle = args[0];
+      videoPrivacy = args[1];
+
+    } catch(Exception e) {
+    }
+  }
+
+  /**
+   * Ckecks the client_secrets.json and the stat_settings.xml for existence.
+   */
+  private static void checkInputs() {
+    File fSecrets = new File(System.getProperty("user.dir") + "/client_secrets.json");
+    File fSettings = new File(System.getProperty("user.dir") + "/stat_settings.xml");
+
+    if (!fSecrets.exists() || fSecrets.isDirectory()) {
+      System.out.print("[ERROR] File 'client_secrets.json' does not exist in the program directory! Please download  the preset-file from the main GitHub-Page of this tool and enter your client secrets!");
+      System.exit(1);
+    }
+
+    if (!fSettings.exists() || fSecrets.isDirectory()) {
+      System.out.print("[ERROR] File 'stat_settings.xml' does not exist in the program directory! Please download  the preset-file from the main GitHub-Page of this tool and enter your settings!");
+      System.exit(1);
+    }
+  }
+
+  /**
+   * Gets the static script-settings out of the
+   * @return
+     */
+  private static List<String> getSettings() {
+
+    List<String> results = new ArrayList<String>();
+
+    File xmlFile = new File(System.getProperty("user.dir") + "/stat_settings.xml");
+    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+
+
+    try {
+
+      DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+      org.w3c.dom.Document doc = documentBuilder.parse(xmlFile);
+      doc.getDocumentElement().normalize();
+
+      results.add(0, doc.getElementsByTagName("location").item(0).getTextContent());
+      results.add(1, doc.getElementsByTagName("log").item(0).getTextContent());
+      results.add(2, doc.getElementsByTagName("resumableUpload").item(0).getTextContent());
+
+
+    } catch (ParserConfigurationException e) {
+      e.printStackTrace();
+    } catch (SAXException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
+    return results;
+  }
+
+  /**
+   * Transforms "getSettings().get(2)" to inversed boolean.
+   * @return
+     */
+  private static boolean getresumableUpload(){
+    if (getSettings().get(2).equals("false")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Gets the current calender time and date and returns it as string (dd.MM.yyyy HH:mm:ss).
+   * @return
+   */
+  private static String getTime() {
+    Calendar cal = Calendar.getInstance();
+    String timeDate = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
+    return timeDate;
+  }
+
+  /**
+   * Gets youtube API login credentials out of client_secrets.json.
+   * @param scopes
+   * @return
+   * @throws Exception
+   */
+  private static Credential authorize(List<String> scopes) throws Exception {
+
+    /*GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+        JSON_FACTORY, UploadVideo.class.getResourceAsStream("/client_secrets.json"));*/
+
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+        JSON_FACTORY, new FileInputStream(System.getProperty("user.dir") + "/client_secrets.json"));
+
+    if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+        || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+      System.out.println(
+          "Enter Client ID and Secret from https://code.google.com/apis/console/?api=youtube"
+          + "into youtube-cmdline-uploadvideo-sample/src/main/resources/client_secrets.json");
+      System.exit(1);
+    }
+
+    FileCredentialStore credentialStore = new FileCredentialStore(
+        new File(System.getProperty("user.home"), ".credentials/youtube-api-uploadvideo.json"),
+        JSON_FACTORY);
+
+    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialStore(credentialStore)
+        .build();
+
+    LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
+
+    return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+  }
+
+  /**
+   * Upload method.
+   * @param _videoFile
+   */
   private static void uploadVideo(File _videoFile) {
 
     List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
@@ -305,7 +367,7 @@ public class UploadVideo {
        * uploaded in a single request. False (default) = resumable media upload protocol to upload
        * in data chunks.
        */
-      uploader.setDirectUploadEnabled(false);
+      uploader.setDirectUploadEnabled(getresumableUpload());
 
       MediaHttpUploaderProgressListener progressListener = new MediaHttpUploaderProgressListener() {
         public void progressChanged(MediaHttpUploader uploader) throws IOException {
@@ -317,7 +379,7 @@ public class UploadVideo {
               System.out.println("[ " + getTime() + " ] Initiation Completed");
               break;
             case MEDIA_IN_PROGRESS:
-              System.out.println("[ " + getTime() + " ] Upload percentage: " + uploader.getProgress());
+              System.out.println("[ " + getTime() + " ] Upload percentage: " + new DecimalFormat("##.##").format(uploader.getProgress() * 100) + "%");
               break;
             case MEDIA_COMPLETE:
               System.out.println("[ " + getTime() + " ] Upload Completed!");
@@ -355,15 +417,7 @@ public class UploadVideo {
   }
 
   /**
-   * Gets the user selected local video file to upload.
-   */
-  private static File getVideoFromUser() throws IOException {
-    File[] listOfVideoFiles = getLocalVideoFiles();
-    return getUserChoice(listOfVideoFiles);
-  }
-
-  /**
-   * Gets an array of videos in the current directory.
+   * Gets an array of videos in the video directory.
    */
   private static File[] getLocalVideoFiles() throws IOException {
 
@@ -389,54 +443,4 @@ public class UploadVideo {
     return currentDirectory.listFiles(videoFilter);
   }
 
-  /**
-   * Outputs video file options to the user, records user selection, and returns the video (File
-   * object).
-   *
-   * @param videoFiles Array of video File objects
-   */
-  private static File getUserChoice(File videoFiles[]) throws IOException {
-
-    if (videoFiles.length < 1) {
-      throw new IllegalArgumentException("No video files in this directory.");
-    }
-
-    for (int i = 0; i < videoFiles.length; i++) {
-      System.out.println(" " + i + " = " + videoFiles[i].getName());
-    }
-
-    BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-    String inputChoice;
-
-    do {
-      System.out.print("Choose the number of the video file you want to upload: ");
-      inputChoice = bReader.readLine();
-    } while (!isValidIntegerSelection(inputChoice, videoFiles.length));
-
-    return videoFiles[Integer.parseInt(inputChoice)];
-  }
-
-  /**
-   * Checks if string contains a valid, positive integer that is less than max. Please note, I am
-   * not testing the upper limit of an integer (2,147,483,647). I just go up to 999,999,999.
-   *
-   * @param input String to test.
-   * @param max Integer must be less then this Maximum number.
-   */
-  public static boolean isValidIntegerSelection(String input, int max) {
-    if (input.length() > 9) return false;
-
-    boolean validNumber = false;
-    // Only accepts positive numbers of up to 9 numbers.
-    Pattern intsOnly = Pattern.compile("^\\d{1,9}$");
-    Matcher makeMatch = intsOnly.matcher(input);
-
-    if (makeMatch.find()) {
-      int number = Integer.parseInt(makeMatch.group());
-      if ((number >= 0) && (number < max)) {
-        validNumber = true;
-      }
-    }
-    return validNumber;
-  }
 }

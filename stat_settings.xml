@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <settings>
+
 	<!-- PLEASE CAHNGE "\" IN THE PATH TO "/"! -->
-	<location>E:/NOCH HOCHZULADEN/</location>
+	<location>E:/NOCH HOCHZULADEN/tl</location>
+
+	<!-- ENABLE OR DISABLE LOG OUTPUT (true | false) -->
 	<log>true</log>
+
+	<!--
+		ENABLE OR DISABLE RESUMABLE UPLOAD (true | false)
+	 	If the script throws the exception:
+	 	"java.io.IOException: insufficient data written"
+	 	please disable that to fix that problem.
+	 -->
+	<resumableUpload>true</resumableUpload>
+
 </settings>
